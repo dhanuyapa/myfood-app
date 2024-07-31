@@ -114,3 +114,31 @@ exports.removeFromCart = async (req, res) => {
         res.status(500).json({ error: "An error occurred while removing item from cart" });
     }
 };
+exports.calculateTotalPrice = async (req, res) => {
+    try {
+        const { cartItemId } = req.params;
+
+        // Find the cart item by ID and populate the foodItems with details
+        const cartItem = await CartItem.findById(cartItemId).populate('foodItems.foodId');
+
+        if (!cartItem) {
+            return res.status(404).json({ error: "Cart item not found" });
+        }
+
+        let totalPrice = 0;
+
+        // Iterate through each item in the foodItems array and calculate the total price
+        cartItem.foodItems.forEach(item => {
+            const price = item.foodId.price;
+            const quantity = item.quantity;
+            const itemTotalPrice = price * quantity;
+            totalPrice += itemTotalPrice;
+        });
+
+        // Respond with the total price
+        res.status(200).json({ total_price: totalPrice });
+    } catch (error) {
+        console.error("Error calculating total price:", error);
+        res.status(500).json({ error: "An error occurred while calculating total price" });
+    }
+};

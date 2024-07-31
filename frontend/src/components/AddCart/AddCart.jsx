@@ -51,6 +51,31 @@ function AddCart() {
         }
     };
 
+    const handleremove = async () => {
+        try {
+            setLoading(true);
+            // Retrieve loggedInUserNIC from local storage
+            const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
+
+            // Make sure loggedInUserNIC and foodId are defined
+            if (!loggedInUserNIC || !foodId) {
+                throw new Error('Invalid parameters');
+            }
+
+            const response = await axios.delete(`http://localhost:8070/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
+            setMessage(response.data.message);
+            calculateTotalPrice(); // Calculate and display total price after removing the item
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+   
+
+
+
     const handleViewTotal = () => {
         calculateTotalPrice();
     };
@@ -76,6 +101,8 @@ function AddCart() {
             <button onClick={handleAddToCart} disabled={loading}>
                 {loading ? 'Adding to Cart...' : 'Add to Cart'}
             </button>
+
+            <button onClick={handleremove}>remove</button> 
             <button onClick={handleViewTotal}>View Total</button>
             {message && <p>{message}</p>}
             {error && <p>Error: {error}</p>}
