@@ -74,3 +74,43 @@ exports.calculateTotalPrice = async (req, res) => {
         res.status(500).json({ error: "An error occurred while calculating total price" });
     }
 };
+
+// Controller for removing an item from the cart
+exports.removeFromCart = async (req, res) => {
+    try {
+        const { nic, foodId } = req.params;
+
+        // Check if the required fields are provided
+        if (!nic || !foodId) {
+            return res.status(400).json({ error: "NIC and Food ID are required" });
+        }
+
+        // Find the cart item by NIC
+        let cartItem = await CartItem.findOne({ nic });
+
+        if (!cartItem) {
+            return res.status(404).json({ error: "Cart not found" });
+        }
+
+        // Find the food item in the cart
+        const foodItemIndex = cartItem.foodItems.findIndex(item => item.foodId.equals(foodId));
+
+        if (foodItemIndex === -1) {
+            return res.status(404).json({ error: "Food item not found in cart" });
+        }
+
+        // Remove the food item from the cart
+        cartItem.foodItems.splice(foodItemIndex, 1);
+
+        // Save the updated cart item to the database
+        const updatedCartItem = await cartItem.save();
+
+        res.status(200).json({ 
+            message: "Item removed from cart successfully", 
+            data: updatedCartItem 
+        });
+    } catch (error) {
+        console.error("Error removing item from cart:", error);
+        res.status(500).json({ error: "An error occurred while removing item from cart" });
+    }
+};
