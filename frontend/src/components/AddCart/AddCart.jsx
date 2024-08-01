@@ -43,7 +43,7 @@ function AddCart() {
 
     const calculateTotalPrice = async () => {
         try {
-            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/661d01d6a45150786bea9d8d`);
+            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/66a9e0fb1eb0067ae6be79c5`);
             setTotalPrice(response.data.total_price);
         } catch (error) {
             console.error('Error calculating total price:', error);
@@ -72,17 +72,17 @@ function AddCart() {
         }
     };
 
-   
-
-
-
     const handleViewTotal = () => {
-        calculateTotalPrice();
+        navigate(`/totalPrice/${nic}/${cartItemId}`);
     };
 
     const handlePlaceOrder = () => {
         // Any other logic for placing the order can go here
         navigate('/map');
+    };
+
+    const handleDisplayCart = () => {
+        navigate(`/addCart/cartItems/${nic}`);
     };
 
     return (
@@ -102,13 +102,14 @@ function AddCart() {
                 {loading ? 'Adding to Cart...' : 'Add to Cart'}
             </button>
 
-            <button onClick={handleremove}>remove</button> 
+            <button onClick={handleremove}>Remove</button> 
             <button onClick={handleViewTotal}>View Total</button>
             {message && <p>{message}</p>}
             {error && <p>Error: {error}</p>}
             {totalPrice !== null && <p>Total Price: ${totalPrice.toFixed(2)}</p>}
 
             <button onClick={handlePlaceOrder}>Place Order</button>
+            <button onClick={handleDisplayCart}>Display Cart Items</button>
         </div>
     );
 }

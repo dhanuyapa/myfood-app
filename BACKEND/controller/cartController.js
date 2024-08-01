@@ -12,7 +12,7 @@ exports.addToCart = async (req, res) => {
         }
 
         // Check if the cart item already exists for the customer
-        let cartItem = await CartItem.findOne({ nic});
+        let cartItem = await CartItem.findOne({ nic });
 
         // If the cart item doesn't exist, create a new one
         if (!cartItem) {
@@ -74,6 +74,7 @@ exports.calculateTotalPrice = async (req, res) => {
         res.status(500).json({ error: "An error occurred while calculating total price" });
     }
 };
+
 
 // Controller for removing an item from the cart
 exports.removeFromCart = async (req, res) => {
@@ -140,5 +141,22 @@ exports.calculateTotalPrice = async (req, res) => {
     } catch (error) {
         console.error("Error calculating total price:", error);
         res.status(500).json({ error: "An error occurred while calculating total price" });
+    }
+};
+exports.getCartItemsByNIC = async (req, res) => {
+    try {
+        const { nic } = req.params;
+
+        // Find the cart item by NIC and populate food details
+        const cartItem = await CartItem.findOne({ nic }).populate('foodItems.foodId', 'foodname price imageUrl');
+
+        if (!cartItem) {
+            return res.status(404).json({ error: "Cart not found" });
+        }
+
+        res.status(200).json({ data: cartItem.foodItems });
+    } catch (error) {
+        console.error("Error fetching cart items:", error);
+        res.status(500).json({ error: "An error occurred while fetching cart items" });
     }
 };
