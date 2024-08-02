@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { Box } from '@mui/system';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { Typography, Button, TextField } from '@mui/material';
+import Footer from '../footer/footer';
 
 function AddCart() {
     const { nic, foodId } = useParams();
@@ -10,19 +15,28 @@ function AddCart() {
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
     const [totalPrice, setTotalPrice] = useState(null);
+    const [cartItemId, setCartItemId] = useState(null);
+    const [foodDetails, setFoodDetails] = useState({ foodname: '', imageUrl: '' });
 
     useEffect(() => {
-        // Retrieve loggedInUserNIC from local storage
-        const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
-    }, []);
+        const fetchFoodDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8070/Food/fetch/${foodId}`);
+                setFoodDetails(response.data);
+            } catch (error) {
+                console.error('Error fetching food details:', error);
+                setError('Error fetching food details');
+            }
+        };
+
+        fetchFoodDetails();
+    }, [foodId]);
 
     const handleAddToCart = async () => {
         try {
             setLoading(true);
-            // Retrieve loggedInUserNIC from local storage
             const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
 
-            // Make sure loggedInUserNIC, nic, and foodId are defined
             if (!loggedInUserNIC || !nic || !foodId) {
                 throw new Error('Invalid parameters');
             }
@@ -32,8 +46,11 @@ function AddCart() {
                 foodId,
                 quantity
             });
+
             setMessage(response.data.message);
-            calculateTotalPrice(); // Calculate and display total price after adding the item
+            setCartItemId(response.data.cartItemId); // Capture cartItemId from response
+            calculateTotalPrice(response.data.cartItemId); // Pass cartItemId to calculateTotalPrice function
+            navigate(`/addCart/cartItems/${nic}/${response.data.cartItemId}`); // Navigate to cart items page
         } catch (error) {
             setError(error.message);
         } finally {
@@ -41,9 +58,9 @@ function AddCart() {
         }
     };
 
-    const calculateTotalPrice = async () => {
+    const calculateTotalPrice = async (cartItemId) => {
         try {
-            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/661d01d6a45150786bea9d8d`);
+            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
             setTotalPrice(response.data.total_price);
         } catch (error) {
             console.error('Error calculating total price:', error);
@@ -51,38 +68,122 @@ function AddCart() {
         }
     };
 
-    const handleViewTotal = () => {
-        calculateTotalPrice();
+
+  
+
+    const handleremove = async () => {
+        try {
+            setLoading(true);
+            const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
+
+            if (!loggedInUserNIC || !foodId) {
+                throw new Error('Invalid parameters');
+            }
+
+            const response = await axios.delete(`http://localhost:8070/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
+            setMessage(response.data.message);
+            calculateTotalPrice(cartItemId);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handlePlaceOrder = () => {
-        // Any other logic for placing the order can go here
-        navigate('/map');
+    const handleViewTotal = () => {
+        navigate(`/totalPrice/${nic}/${cartItemId}`);
     };
+
+ 
+
+    const handlePlaceOrder = async () => {
+        try {
+            setLoading(true);
+            const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
+
+            if (!loggedInUserNIC || !foodId || !cartItemId) {
+                throw new Error('Invalid parameters');
+            }
+
+            await axios.delete(`http://localhost:8070/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
+            navigate('/map'); // Navigate after deletion is successful
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     return (
         <div>
-            <h2>Add to Cart</h2>
-            <div>
-                <label htmlFor="quantity">Quantity:</label>
-                <input 
-                    type="number" 
-                    id="quantity" 
-                    value={quantity} 
-                    onChange={(e) => setQuantity(e.target.value)} 
-                    min="1" 
-                />
-            </div>
-            <button onClick={handleAddToCart} disabled={loading}>
-                {loading ? 'Adding to Cart...' : 'Add to Cart'}
-            </button>
-            <button onClick={handleViewTotal}>View Total</button>
-            {message && <p>{message}</p>}
-            {error && <p>Error: {error}</p>}
-            {totalPrice !== null && <p>Total Price: ${totalPrice.toFixed(2)}</p>}
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
+            
+            <Grid item xs={12} sm={9}>
+                    <Paper elevation={6}>
+                        <img src="/./home.jpg" alt="Building" style={{ width: '100%',  }} />
+                    </Paper>
+                </Grid>
+            <Grid container spacing={6}>
+                <Grid item xs={9} sm={12}>
+                    <Paper elevation={1} sx={{ padding: '10px' }}>
+                        <Typography variant="h2">Add to Cart</Typography>
+                       
+                        <img src={foodDetails.imageUrl} alt={foodDetails.foodname} style={{ width: '200px', height: '200px',marginTop: '40px' }} />
+                        <Typography  style={{ marginTop: '20px', fontSize: '20px' }} >{foodDetails.foodname}</Typography>
+                        <div>
+                            <TextField 
+                                type="number" 
+                                id="quantity" 
+                                value={quantity} 
+                                onChange={(e) => setQuantity(parseInt(e.target.value))} 
+                                InputProps={{ inputProps: { min: 1 } }} 
+                                disabled
+                            />
+                        </div>
+                        <div style={{ marginTop: '40px' }} >
+                        <Button 
+                            onClick={handleAddToCart} 
+                            disabled={loading} 
+                            variant="contained" 
+                            style={{
+                                borderRadius: '20px',
+                                padding: '10px 20px',
+                                fontSize: '16px',
+                                textTransform: 'none'
+                            }}
+                        >
+                            {loading ? 'Adding to Cart...' : '+ Add to Cart'}
+                        </Button>
+                        <Button 
+                            onClick={handleremove} 
+                            variant="contained" 
+                            color="secondary"
+                            style={{
+                                borderRadius: '20px',
+                                padding: '10px 20px',
+                                fontSize: '16px',
+                                textTransform: 'none',
+                                backgroundColor: 'red',
+                                color: 'black',
+                                marginLeft: '10px'
+                            }}
+                        >
+                            Remove
+                        </Button></div>
+                        {message && <Typography variant="body1">{message}</Typography>}
+                        {error && <Typography variant="body1" color="error">{error}</Typography>}
+                        {totalPrice !== null && <Typography variant="h5">Total Price: ${totalPrice.toFixed(2)}</Typography>}
 
-            <button onClick={handlePlaceOrder}>Place Order</button>
-        </div>
+                       {/* <Button onClick={handleDisplayCart} disabled={!cartItemId} variant="contained">Display Cart Items</Button> */}
+                    <br></br><br></br><br></br><br></br>
+                    
+                    </Paper>
+                </Grid>
+              
+            </Grid>
+     
+        </Box>     <Footer /></div>
     );
 }
 

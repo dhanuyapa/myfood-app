@@ -54,7 +54,7 @@ function Login() {
         if (nic === '200028301681' && password === '12345678@') {
           navigate('/add');
         } else {
-          navigate('/getUser/:nic');
+          navigate('/fetch');
         }
       } else {
         alert('Invalid NIC or password');
@@ -127,12 +127,7 @@ function Login() {
                           required
                           autoComplete="off"
                         />
-                        {/* Toggle visibility icon */}
-                        {showPassword ? (
-                          <VisibilityIcon className="visibility-icon-l" onClick={togglePasswordVisibility} />
-                        ) : (
-                          <VisibilityOffIcon className="visibility-icon-l" onClick={togglePasswordVisibility} />
-                        )}
+                       
                       </div>
 
                       <div className="form-submit-btn-l">
