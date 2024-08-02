@@ -156,3 +156,22 @@ exports.getCartItemsByNIC = async (req, res) => {
         res.status(500).json({ error: "An error occurred while fetching cart items" });
     }
 };
+
+// Controller for deleting a cart by NIC and cartItemId
+exports.deleteCartByNICAndCartItemId = async (req, res) => {
+    try {
+        const { nic, cartItemId } = req.params;
+
+        // Find the cart item by NIC and cartItemId
+        const cartItem = await CartItem.findOneAndDelete({ nic, _id: cartItemId });
+
+        if (!cartItem) {
+            return res.status(404).json({ error: "Cart not found" });
+        }
+
+        res.status(200).json({ message: "Cart deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting cart:", error);
+        res.status(500).json({ error: "An error occurred while deleting cart" });
+    }
+};

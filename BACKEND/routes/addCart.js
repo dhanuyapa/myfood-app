@@ -6,7 +6,10 @@ const cartController = require("../controller/cartController");
 router.post("/addItem/:nic/:foodId", cartController.addToCart);
 router.get("/totalPrice/:nic/:cartItemId", cartController.calculateTotalPrice);
 router.delete("/removeItem/:nic/:foodId", cartController.removeFromCart); // Updated to use DELETE method with URL parameters
-// Router definition
+// Route to fetch cart items by NIC
 router.get("/cartItems/:nic/:cartItemId", cartController.getCartItemsByNIC);
+router.delete("/cartItems/:nic/:cartItemId", cartController.deleteCartByNICAndCartItemId);
+
+
 
 module.exports = router;
