@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Box } from '@mui/system';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { Typography, Button, TextField } from '@mui/material';
 
 function AddCart() {
     const { nic, foodId } = useParams();
@@ -10,19 +14,28 @@ function AddCart() {
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
     const [totalPrice, setTotalPrice] = useState(null);
+    const [cartItemId, setCartItemId] = useState(null);
+    const [foodDetails, setFoodDetails] = useState({ foodname: '', imageUrl: '' });
 
     useEffect(() => {
-        // Retrieve loggedInUserNIC from local storage
-        const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
-    }, []);
+        const fetchFoodDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8070/Food/fetch/${foodId}`);
+                setFoodDetails(response.data);
+            } catch (error) {
+                console.error('Error fetching food details:', error);
+                setError('Error fetching food details');
+            }
+        };
+
+        fetchFoodDetails();
+    }, [foodId]);
 
     const handleAddToCart = async () => {
         try {
             setLoading(true);
-            // Retrieve loggedInUserNIC from local storage
             const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
 
-            // Make sure loggedInUserNIC, nic, and foodId are defined
             if (!loggedInUserNIC || !nic || !foodId) {
                 throw new Error('Invalid parameters');
             }
@@ -32,8 +45,10 @@ function AddCart() {
                 foodId,
                 quantity
             });
+
             setMessage(response.data.message);
-            calculateTotalPrice(); // Calculate and display total price after adding the item
+            setCartItemId(response.data.cartItemId); // Capture cartItemId from response
+            calculateTotalPrice(response.data.cartItemId); // Pass cartItemId to calculateTotalPrice function
         } catch (error) {
             setError(error.message);
         } finally {
@@ -41,9 +56,9 @@ function AddCart() {
         }
     };
 
-    const calculateTotalPrice = async () => {
+    const calculateTotalPrice = async (cartItemId) => {
         try {
-            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/66a9e0fb1eb0067ae6be79c5`);
+            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
             setTotalPrice(response.data.total_price);
         } catch (error) {
             console.error('Error calculating total price:', error);
@@ -54,17 +69,15 @@ function AddCart() {
     const handleremove = async () => {
         try {
             setLoading(true);
-            // Retrieve loggedInUserNIC from local storage
             const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
 
-            // Make sure loggedInUserNIC and foodId are defined
             if (!loggedInUserNIC || !foodId) {
                 throw new Error('Invalid parameters');
             }
 
             const response = await axios.delete(`http://localhost:8070/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
             setMessage(response.data.message);
-            calculateTotalPrice(); // Calculate and display total price after removing the item
+            calculateTotalPrice(cartItemId);
         } catch (error) {
             setError(error.message);
         } finally {
@@ -77,40 +90,51 @@ function AddCart() {
     };
 
     const handlePlaceOrder = () => {
-        // Any other logic for placing the order can go here
         navigate('/map');
     };
 
     const handleDisplayCart = () => {
-        navigate(`/addCart/cartItems/${nic}`);
+        navigate(`/addCart/cartItems/${nic}/${cartItemId}`);
     };
 
     return (
-        <div>
-            <h2>Add to Cart</h2>
-            <div>
-                <label htmlFor="quantity">Quantity:</label>
-                <input 
-                    type="number" 
-                    id="quantity" 
-                    value={quantity} 
-                    onChange={(e) => setQuantity(e.target.value)} 
-                    min="1" 
-                />
-            </div>
-            <button onClick={handleAddToCart} disabled={loading}>
-                {loading ? 'Adding to Cart...' : 'Add to Cart'}
-            </button>
-
-            <button onClick={handleremove}>Remove</button> 
-            <button onClick={handleViewTotal}>View Total</button>
-            {message && <p>{message}</p>}
-            {error && <p>Error: {error}</p>}
-            {totalPrice !== null && <p>Total Price: ${totalPrice.toFixed(2)}</p>}
-
-            <button onClick={handlePlaceOrder}>Place Order</button>
-            <button onClick={handleDisplayCart}>Display Cart Items</button>
-        </div>
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
+            <Grid container spacing={6}>
+                <Grid item xs={10} sm={12}>
+                    <Paper elevation={1} sx={{ padding: '20px' }}>
+                        <Typography variant="h2">Add to Cart</Typography>
+                        <Typography variant="h6">Before adding to cart, please select food</Typography>
+                        <img src={foodDetails.imageUrl} alt={foodDetails.foodname} style={{ width: '200px', height: '200px' }} />
+                        <Typography variant="h5">{foodDetails.foodname}</Typography>
+                        <div>
+                            <TextField 
+                                type="number" 
+                                id="quantity" 
+                                value={quantity} 
+                                onChange={(e) => setQuantity(parseInt(e.target.value))} 
+                                InputProps={{ inputProps: { min: 1 } }} 
+                                disabled
+                            />
+                        </div>
+                        <Button onClick={handleAddToCart} disabled={loading} variant="contained">
+                            {loading ? 'Adding to Cart...' : 'Add to Cart'}
+                        </Button>
+                        <Button onClick={handleremove} variant="contained" color="secondary">Remove</Button> 
+                        <Button onClick={handleViewTotal} disabled={!cartItemId} variant="contained">View Total</Button>
+                        {message && <Typography variant="body1">{message}</Typography>}
+                        {error && <Typography variant="body1" color="error">{error}</Typography>}
+                        {totalPrice !== null && <Typography variant="h5">Total Price: ${totalPrice.toFixed(2)}</Typography>}
+                        <Button onClick={handlePlaceOrder} variant="contained" color="primary">Place Order</Button>
+                        <Button onClick={handleDisplayCart} disabled={!cartItemId} variant="contained">Display Cart Items</Button>
+                    </Paper>
+                </Grid>
+                <Grid item xs={10} sm={9}>
+                    <Paper elevation={3}>
+                        <img src="/../home.jpg" alt="Building" style={{ width: '105%', height: '120%' }} />
+                    </Paper>
+                </Grid>
+            </Grid>
+        </Box>
     );
 }
 

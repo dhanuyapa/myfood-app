@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Typography, Card, CardMedia, CardContent } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, IconButton } from '@mui/material';
+import { Remove } from '@mui/icons-material';
 
-function CartItems() {
-    const { nic } = useParams();
+function DisplayCart() {
+    const { nic, cartItemId } = useParams();
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ function CartItems() {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get(`http://localhost:8070/addCart/cartItems/${nic}`);
+                const response = await axios.get(`http://localhost:8070/addCart/cartItems/${nic}/${cartItemId}`);
                 console.log('Cart items:', response.data.data); // Log the response to check the data
                 setCartItems(response.data.data);
             } catch (error) {
@@ -26,7 +27,7 @@ function CartItems() {
 
         const fetchTotalPrice = async () => {
             try {
-                const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/66a9e0fb1eb0067ae6be79c5`);
+                const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
                 setTotalPrice(response.data.total_price);
             } catch (error) {
                 console.error('Error fetching total price:', error);
@@ -36,7 +37,34 @@ function CartItems() {
 
         fetchCartItems();
         fetchTotalPrice();
-    }, [nic]);
+    }, [nic, cartItemId]);
+
+    const handleRemoveItem = async (foodId) => {
+        try {
+            setLoading(true);
+            const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
+
+            if (!loggedInUserNIC || !foodId) {
+                throw new Error('Invalid parameters');
+            }
+
+            await axios.delete(`http://localhost:8070/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
+
+            // Update the cart items after removing an item
+            const updatedCartItems = cartItems.filter(item => item.foodId._id !== foodId);
+            setCartItems(updatedCartItems);
+
+            // Recalculate the total price
+            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
+            setTotalPrice(response.data.total_price);
+
+        } catch (error) {
+            console.error('Error removing item:', error);
+            setError('Error removing item');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Box sx={{ p: 2 }}>
@@ -74,6 +102,9 @@ function CartItems() {
                                         <Typography variant="subtitle1" color="text.secondary" component="div">
                                             Total Price: ${(item.foodId.price * item.quantity).toFixed(2)}
                                         </Typography>
+                                        <IconButton onClick={() => handleRemoveItem(item.foodId._id)} color="error">
+                                            <Remove />
+                                        </IconButton>
                                     </CardContent>
                                 </Box>
                             </Card>
@@ -88,4 +119,4 @@ function CartItems() {
     );
 }
 
-export default CartItems;
+export default DisplayCart;

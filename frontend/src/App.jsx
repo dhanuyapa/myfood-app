@@ -51,8 +51,7 @@ function App() {
           <Route path="/totalPrice/:nic/:cartItemId" element={<Total />} />
           
           <Route path="/map" element={<MapRoute />} /> {/* Corrected this line */}
-          <Route path="/addCart/cartItems/:nic" element={<DisplayCart />} />
-          
+          <Route path="/addCart/cartItems/:nic/:cartItemId" element={<DisplayCart />} />
 
     
 
