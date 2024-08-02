@@ -15,7 +15,7 @@
 .food-item {
     cursor: pointer;
     font-size: 1.2rem;
-    padding: 10px;
+    padding: 5px;
     background: #fff;
     border-radius: .5rem;
     border: .1rem solid rgba(0,0,0,.2);
@@ -23,7 +23,7 @@
     position: relative;
     overflow: hidden;
     text-align: center;
-    height: 320px; /* Adjust the height value as needed */
+    height: 385px; /* Adjust the height value as needed */
 }
 
 .food-item:hover {
@@ -31,7 +31,7 @@
 }
 
 .food-item h3 {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     font-size: 18px;
 }
 
@@ -51,7 +51,8 @@
 
 .foodname {
     font-weight: bold;
-    margin-bottom: 5px;
+
+    margin-bottom: 1px;
     z-index: 1; /* Ensure text stays behind the navbar */
 }
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Typography, Card, CardMedia, CardContent, IconButton, Button } from '@mui/material';
 import { Remove } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 function DisplayCart() {
     const { nic, cartItemId } = useParams();
@@ -85,6 +86,10 @@ function DisplayCart() {
         }
     };
 
+    const handleAddfoods = () => {
+        navigate("/fetch");
+      };
+
     return (
         <Box sx={{ p: 2 }}>
             {loading ? (
@@ -93,13 +98,27 @@ function DisplayCart() {
                 <Typography color="error">{error}</Typography>
             ) : (
                 <Box>
-                    <Typography variant="h4" gutterBottom>Cart Items</Typography>
+                  <Typography
+                        sx={{
+                            fontSize: '70px',
+                          
+                            fontFamily: '"Roboto Slab", cursive',
+                            color: 'Black',
+                            marginInline: '25%',
+                            display: 'flex',
+             
+                            justifyContent: 'center',
+                        }}
+                    >
+                        Cart Items
+                    </Typography>
+                    <hr></hr>
                     <Box>
                         {cartItems.map((item) => (
-                            <Card key={item.foodId._id} sx={{ display: 'flex', mb: 2 }}>
+                            <Card key={item.foodId._id} sx={{ display: 'flex', mb: 0.1 }}>
                                 <CardMedia
                                     component="img"
-                                    sx={{ width: 100 }}
+                                    sx={{ width: 160 ,height: 100 }}
                                     image={item.foodId.imageUrl || '/path/to/placeholder-image.jpg'}
                                     alt={item.foodId.foodname}
                                     onError={(e) => {
@@ -116,10 +135,10 @@ function DisplayCart() {
                                             Quantity: {item.quantity}
                                         </Typography>
                                         <Typography variant="subtitle1" color="text.secondary" component="div">
-                                            Price: ${item.foodId.price}
+                                            Price: {item.foodId.price} LKR
                                         </Typography>
                                         <Typography variant="subtitle1" color="text.secondary" component="div">
-                                            Total Price: ${(item.foodId.price * item.quantity).toFixed(2)}
+                                            Total Price: {(item.foodId.price * item.quantity).toFixed(2)}  LKR
                                         </Typography>
                                         <IconButton onClick={() => handleRemoveItem(item.foodId._id)} color="error">
                                             <Remove />
@@ -130,9 +149,11 @@ function DisplayCart() {
                         ))}
                     </Box>
                     {totalPrice !== null && (
-                        <Typography variant="h5" gutterBottom>Total Price: ${totalPrice.toFixed(2)}</Typography>
+                        <Typography variant="h5" gutterBottom>Total Price:  {totalPrice.toFixed(2)} LKR</Typography>
                     )}
-                   <Button onClick={handlePlaceOrder} variant="contained" color="primary">Place Order</Button> 
+<Button onClick={handleAddfoods} style={{marginTop: '20px',marginRight: '10px',backgroundColor: 'Blue', color: 'white',marginLeft: '10px'}}>ADD More FOODS</Button> 
+                   
+                   <Button onClick={handlePlaceOrder} style={{marginTop: '20px',marginRight: '10px',backgroundColor: 'green', color: 'white',marginLeft: '10px'}}>Place Order</Button> 
                 </Box>
             )}
         </Box>

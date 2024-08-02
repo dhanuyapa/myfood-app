@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import "./AllFood.css";
 import FoodSearch from '../SearchBar/FoodSearch';
 import Footer from '../footer/footer';
+import { Typography } from '@mui/material';
 
 function AllFoods() {
     const [foods, setFoods] = useState([]);
@@ -54,7 +55,20 @@ function AllFoods() {
             <div className="search">
                 <FoodSearch />
             </div>
-            <h2>All Foods</h2>
+            <Typography
+                        sx={{
+                            fontSize: '40px',
+                          
+                            fontFamily: '"Roboto Slab", cursive',
+                            color: 'Black',
+                            marginInline: '25%',
+                            display: 'flex',
+             
+                            justifyContent: 'center',
+                        }}
+                    >
+                       All Foods
+                    </Typography>
             <ul className="food-list">
                 {foods.map((food) => (
                     <li key={food._id} className="food-item">
@@ -67,7 +81,9 @@ function AllFoods() {
                             />
                         )}
                         <div className="food-details">
-                            <div className="foodname">{food.foodname}</div>
+                        <img src='./rate.png' alt='str' className="st" style={{ height: '65px', width: '65px',marginTop: '1px',marginBottom: '1px' }} />
+                            <div style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '-20px'}}>{food.foodname  } </div>
+                           
                             <div className="food-price">Price: {food.price}</div>
                             <div className="food-description">{food.description}</div>
                         </div>

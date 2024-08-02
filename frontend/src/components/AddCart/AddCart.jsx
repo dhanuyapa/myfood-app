@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { Box } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Typography, Button, TextField } from '@mui/material';
+import Footer from '../footer/footer';
 
 function AddCart() {
     const { nic, foodId } = useParams();
@@ -67,6 +68,9 @@ function AddCart() {
         }
     };
 
+
+  
+
     const handleremove = async () => {
         try {
             setLoading(true);
@@ -112,20 +116,21 @@ function AddCart() {
 
 
     return (
+        <div>
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
             
             <Grid item xs={12} sm={9}>
                     <Paper elevation={6}>
-                        <img src="/../home.jpg" alt="Building" style={{ width: '100%', height: '120%' }} />
+                        <img src="/./home.jpg" alt="Building" style={{ width: '100%',  }} />
                     </Paper>
                 </Grid>
             <Grid container spacing={6}>
                 <Grid item xs={9} sm={12}>
                     <Paper elevation={1} sx={{ padding: '10px' }}>
                         <Typography variant="h2">Add to Cart</Typography>
-                        <Typography variant="h6">Before adding to cart, please select food</Typography>
-                        <img src={foodDetails.imageUrl} alt={foodDetails.foodname} style={{ width: '200px', height: '200px' }} />
-                        <Typography variant="h5">{foodDetails.foodname}</Typography>
+                       
+                        <img src={foodDetails.imageUrl} alt={foodDetails.foodname} style={{ width: '200px', height: '200px',marginTop: '40px' }} />
+                        <Typography  style={{ marginTop: '20px', fontSize: '20px' }} >{foodDetails.foodname}</Typography>
                         <div>
                             <TextField 
                                 type="number" 
@@ -136,7 +141,7 @@ function AddCart() {
                                 disabled
                             />
                         </div>
-                        <div style={{ marginTop: '20px' }} >
+                        <div style={{ marginTop: '40px' }} >
                         <Button 
                             onClick={handleAddToCart} 
                             disabled={loading} 
@@ -171,11 +176,14 @@ function AddCart() {
                         {totalPrice !== null && <Typography variant="h5">Total Price: ${totalPrice.toFixed(2)}</Typography>}
 
                        {/* <Button onClick={handleDisplayCart} disabled={!cartItemId} variant="contained">Display Cart Items</Button> */}
+                    <br></br><br></br><br></br><br></br>
+                    
                     </Paper>
                 </Grid>
               
             </Grid>
-        </Box>
+     
+        </Box>     <Footer /></div>
     );
 }
 
