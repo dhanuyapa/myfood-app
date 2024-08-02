@@ -49,6 +49,7 @@ function AddCart() {
             setMessage(response.data.message);
             setCartItemId(response.data.cartItemId); // Capture cartItemId from response
             calculateTotalPrice(response.data.cartItemId); // Pass cartItemId to calculateTotalPrice function
+            navigate(`/addCart/cartItems/${nic}/${response.data.cartItemId}`); // Navigate to cart items page
         } catch (error) {
             setError(error.message);
         } finally {
@@ -89,19 +90,38 @@ function AddCart() {
         navigate(`/totalPrice/${nic}/${cartItemId}`);
     };
 
-    const handlePlaceOrder = () => {
-        navigate('/map');
+ 
+
+    const handlePlaceOrder = async () => {
+        try {
+            setLoading(true);
+            const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
+
+            if (!loggedInUserNIC || !foodId || !cartItemId) {
+                throw new Error('Invalid parameters');
+            }
+
+            await axios.delete(`http://localhost:8070/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
+            navigate('/map'); // Navigate after deletion is successful
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDisplayCart = () => {
-        navigate(`/addCart/cartItems/${nic}/${cartItemId}`);
-    };
 
     return (
         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
+            
+            <Grid item xs={12} sm={9}>
+                    <Paper elevation={6}>
+                        <img src="/../home.jpg" alt="Building" style={{ width: '100%', height: '120%' }} />
+                    </Paper>
+                </Grid>
             <Grid container spacing={6}>
-                <Grid item xs={10} sm={12}>
-                    <Paper elevation={1} sx={{ padding: '20px' }}>
+                <Grid item xs={9} sm={12}>
+                    <Paper elevation={1} sx={{ padding: '10px' }}>
                         <Typography variant="h2">Add to Cart</Typography>
                         <Typography variant="h6">Before adding to cart, please select food</Typography>
                         <img src={foodDetails.imageUrl} alt={foodDetails.foodname} style={{ width: '200px', height: '200px' }} />
@@ -116,23 +136,44 @@ function AddCart() {
                                 disabled
                             />
                         </div>
-                        <Button onClick={handleAddToCart} disabled={loading} variant="contained">
-                            {loading ? 'Adding to Cart...' : 'Add to Cart'}
+                        <div style={{ marginTop: '20px' }} >
+                        <Button 
+                            onClick={handleAddToCart} 
+                            disabled={loading} 
+                            variant="contained" 
+                            style={{
+                                borderRadius: '20px',
+                                padding: '10px 20px',
+                                fontSize: '16px',
+                                textTransform: 'none'
+                            }}
+                        >
+                            {loading ? 'Adding to Cart...' : '+ Add to Cart'}
                         </Button>
-                        <Button onClick={handleremove} variant="contained" color="secondary">Remove</Button> 
-                        <Button onClick={handleViewTotal} disabled={!cartItemId} variant="contained">View Total</Button>
+                        <Button 
+                            onClick={handleremove} 
+                            variant="contained" 
+                            color="secondary"
+                            style={{
+                                borderRadius: '20px',
+                                padding: '10px 20px',
+                                fontSize: '16px',
+                                textTransform: 'none',
+                                backgroundColor: 'red',
+                                color: 'black',
+                                marginLeft: '10px'
+                            }}
+                        >
+                            Remove
+                        </Button></div>
                         {message && <Typography variant="body1">{message}</Typography>}
                         {error && <Typography variant="body1" color="error">{error}</Typography>}
                         {totalPrice !== null && <Typography variant="h5">Total Price: ${totalPrice.toFixed(2)}</Typography>}
-                        <Button onClick={handlePlaceOrder} variant="contained" color="primary">Place Order</Button>
-                        <Button onClick={handleDisplayCart} disabled={!cartItemId} variant="contained">Display Cart Items</Button>
+
+                       {/* <Button onClick={handleDisplayCart} disabled={!cartItemId} variant="contained">Display Cart Items</Button> */}
                     </Paper>
                 </Grid>
-                <Grid item xs={10} sm={9}>
-                    <Paper elevation={3}>
-                        <img src="/../home.jpg" alt="Building" style={{ width: '105%', height: '120%' }} />
-                    </Paper>
-                </Grid>
+              
             </Grid>
         </Box>
     );

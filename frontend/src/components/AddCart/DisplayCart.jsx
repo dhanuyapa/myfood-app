@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Typography, Card, CardMedia, CardContent, IconButton } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, IconButton, Button } from '@mui/material';
 import { Remove } from '@mui/icons-material';
 
 function DisplayCart() {
     const { nic, cartItemId } = useParams();
+    const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -38,6 +39,24 @@ function DisplayCart() {
         fetchCartItems();
         fetchTotalPrice();
     }, [nic, cartItemId]);
+
+    const handlePlaceOrder = async () => {
+        try {
+            setLoading(true);
+            const loggedInUserNIC = localStorage.getItem('loggedInUserNIC');
+
+            if (!loggedInUserNIC || !cartItemId) {
+                throw new Error('Invalid parameters');
+            }
+
+            await axios.delete(`http://localhost:8070/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
+            navigate('/map'); // Navigate after deletion is successful
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleRemoveItem = async (foodId) => {
         try {
@@ -113,6 +132,7 @@ function DisplayCart() {
                     {totalPrice !== null && (
                         <Typography variant="h5" gutterBottom>Total Price: ${totalPrice.toFixed(2)}</Typography>
                     )}
+                   <Button onClick={handlePlaceOrder} variant="contained" color="primary">Place Order</Button> 
                 </Box>
             )}
         </Box>
