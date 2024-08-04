@@ -1,11 +1,13 @@
 .all-contact-us-container {
-    padding: 20px;
+   
+   
   }
   
   .title {
     text-align: center;
     font-size: 2em;
     margin-bottom: 20px;
+    margin-top: 20px;
   }
   
   .contact-table {

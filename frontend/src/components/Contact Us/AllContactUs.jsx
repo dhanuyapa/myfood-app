@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AllContactUs.css';
+import Header from '../Header/AdminHeader';
 
 function AllContactUs() {
   const [contactDetails, setContactDetails] = useState([]);
@@ -24,6 +25,7 @@ function AllContactUs() {
 
   return (
     <div className="all-contact-us-container">
+        <Header />
       <h1 className="title">All Contact Us Details</h1>
       {loading ? (
         <p>Loading...</p>
