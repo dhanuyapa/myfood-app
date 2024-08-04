@@ -6,6 +6,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Typography from '@mui/material/Typography';
 import add2 from "./add2.jpeg";
+import Foot from '../footer/footer';
 
 function ViewFood() {
     const navigate = useNavigate(); // Initialize navigate
@@ -40,6 +41,7 @@ function ViewFood() {
     }
   
     return (
+        <div>
         <div className="View">
             <div className="Vleft">
                 <img    
@@ -60,7 +62,7 @@ function ViewFood() {
                 <hr />
                 <div className="place-container">
                     <PlaceIcon className="place-icon" />
-                    <p className="Address">30 King Street, Matale, Sri Lanka</p>
+                    <p className="Address">30 King Street, Kurunagala, Sri Lanka</p>
                 </div>
 
 
@@ -74,7 +76,9 @@ function ViewFood() {
     className="add2"
     style={{ width: '600px', height: 'auto', paddingTop: '10px' }}
   />
-</div></div>
+</div>
+
+</div><Foot /></div>
     );
 }
 

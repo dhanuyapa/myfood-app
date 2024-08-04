@@ -131,7 +131,7 @@ const Addcustomer = () => {
         <div className="container1">
         <form className='flex' method="POST" onSubmit={handleSubmit}>
           
-            <center><h1 className="form-title">Register</h1></center>
+            <center><h1 className="form-title">Registration</h1></center>
 
     <div className="main-user-info">  
     <div className="user-input-box-dhanu"> 

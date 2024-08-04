@@ -59,7 +59,7 @@ function AllFoods() {
                         sx={{
                             fontSize: '40px',
                           
-                            fontFamily: '"Roboto Slab", cursive',
+                            fontFamily: '"sans-serif',
                             color: 'Black',
                             marginInline: '25%',
                             display: 'flex',
@@ -84,7 +84,7 @@ function AllFoods() {
                         <img src='./rate.png' alt='str' className="st" style={{ height: '65px', width: '65px',marginTop: '1px',marginBottom: '1px' }} />
                             <div style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '-20px'}}>{food.foodname  } </div>
                            
-                            <div className="food-price">Price: {food.price}</div>
+                            <div className="food-price">Price: {food.price} LKR</div>
                             <div className="food-description">{food.description}</div>
                         </div>
                         <button onClick={() => handleAddToCart(food._id)} className ="btnAdd">Add Cart</button>

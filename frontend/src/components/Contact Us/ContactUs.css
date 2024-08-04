@@ -4,8 +4,8 @@
 
   font-size: 100px;
   margin-top: -1.5%;
-  font-family: "Irish Grover";
-  color:#FFF;
+  font-family: "sans-serif";
+  color:#050505;
   margin-inline: 25%;
   display: flex;
   padding-top: 3%;
@@ -15,7 +15,7 @@
 
 .container4 {
   
-  background-color: #e9cc8f;
+  background-color: #FFFD74;
   background-size: cover;
   background-position: left;
   min-height: 120vh;
@@ -72,7 +72,8 @@ width: 500px;
   font-size: 16px;
   padding: 12px 30px;
   margin-top: 90px;
-  margin-left:25%;
+  margin-left:28%;
+  margin-right:25% ;
   align-items: center;
   transform: translateY(40%);
  

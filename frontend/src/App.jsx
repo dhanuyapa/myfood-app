@@ -19,6 +19,7 @@ import Total from './components/AddCart/Total';
 import AboutUs from './components/AboutUs/AboutUs';
 import MapRoute from './components/map/map';
 import DisplayCart from './components/AddCart/DisplayCart';
+import Payment from './components/payment/payment';
 
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/" element={<Home />} /> {/* Display Home component by default */}
           <Route path="/ContactUs" element={<ContactUs/>} />
           <Route path="/AboutUs" element={<AboutUs/>} /> {/* Display Home component by default */}
+          
           <Route path="/register" element={<Addcustomer />} />
           <Route path="/loginCus" element={<Login />} />
           <Route path="/getUser/:nic" element={<UserProfile />} />
@@ -45,15 +47,15 @@ function App() {
           <Route path="/edit/:id" element={<EditFood/>} />
           <Route path="/fetchc" element={<AllCustomer/>} />
           <Route path="/searchByNIC/:nic" element={<ViewCus/>} />
-
+       
           <Route path="/addItem/:nic/:foodId" element={<AddCart/>} />
           <Route path="/addItem/:nic/:foodId" element={<Total/>} />
           <Route path="/totalPrice/:nic/:cartItemId" element={<Total />} />
-          
-          <Route path="/map" element={<MapRoute />} /> {/* Corrected this line */}
           <Route path="/addCart/cartItems/:nic/:cartItemId" element={<DisplayCart />} />
 
-    
+
+          <Route path="/map" element={<MapRoute />} /> {/* Corrected this line */}
+          <Route path="/payment/:nic/:cartItemId" element={<Payment />} />
 
         </Routes>
       </div>
