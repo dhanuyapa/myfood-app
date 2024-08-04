@@ -20,6 +20,7 @@ import AboutUs from './components/AboutUs/AboutUs';
 import MapRoute from './components/map/map';
 import DisplayCart from './components/AddCart/DisplayCart';
 import Payment from './components/payment/payment';
+import AllContactUs from './components/Contact Us/AllContactUs';
 
 
 
@@ -56,7 +57,7 @@ function App() {
 
           <Route path="/map" element={<MapRoute />} /> {/* Corrected this line */}
           <Route path="/payment/:nic/:cartItemId" element={<Payment />} />
-
+          <Route path="/all" element={<AllContactUs />} />
         </Routes>
       </div>
     </Router>

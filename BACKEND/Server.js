@@ -34,6 +34,10 @@ app.use('/Food', foodRoutes);
 const addCartRoutes = require('./routes/addCart');
 app.use('/addCart', addCartRoutes);
 
+
+const contactUsRoutes = require('./routes/contactUs');
+app.use('/contactUs', contactUsRoutes);
+
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
 });
