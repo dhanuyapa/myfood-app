@@ -25,12 +25,13 @@ function AdminHeader() {
 <Nav.Link href="/hfetch" style={{ color: 'white', fontSize: '20px' }}>Edit Food</Nav.Link>
 <Nav.Link href="/fetchc" style={{ color: 'white', fontSize: '20px' }}>All Customers</Nav.Link>
 <Nav.Link href="/fetch" style={{ color: 'white',fontSize: '20px' }}>All Foods</Nav.Link>
+<Nav.Link href="/all" style={{ color: 'white',fontSize: '20px' }}>complains</Nav.Link>
 
            
            
           </Nav>
        
-          <SearchCus />
+      
         </Navbar.Collapse>
       </Container>
     </FullWidthNavbar>
