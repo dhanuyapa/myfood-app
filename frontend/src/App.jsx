@@ -21,6 +21,7 @@ import MapRoute from './components/map/map';
 import DisplayCart from './components/AddCart/DisplayCart';
 import Payment from './components/payment/payment';
 import AllContactUs from './components/Contact Us/AllContactUs';
+import Homee from './components/Homee/Home';
 
 
 
@@ -33,7 +34,8 @@ function App() {
         <Navbar />
         
         <Routes>
-          <Route path="/" element={<Home />} /> {/* Display Home component by default */}
+          <Route path ="/" element={<Homee />} />
+          {/* Display Home component by default */}
           <Route path="/ContactUs" element={<ContactUs/>} />
           <Route path="/AboutUs" element={<AboutUs/>} /> {/* Display Home component by default */}
           

@@ -16,8 +16,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);{/*
 
-
-
 secrete key=D123456!234
 mail=dhanuyapaugc@gmail.com
 

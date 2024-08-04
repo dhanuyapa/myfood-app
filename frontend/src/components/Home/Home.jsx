@@ -70,7 +70,7 @@ const overlayStyle = {
   left: 0,
   width: "100%",
   height: "100vh",
-  backgroundColor: "#FFFD74", //background color
+  backgroundColor: "#d16943", //background color
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
