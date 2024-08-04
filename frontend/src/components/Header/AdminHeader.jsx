@@ -22,10 +22,10 @@ function AdminHeader() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           <Nav.Link href="/add" style={{ color: 'white',fontSize: '20px' }}>Add Food</Nav.Link>
-<Nav.Link href="/hfetch" style={{ color: 'white', fontSize: '20px' }}>Edit Food</Nav.Link>
+<Nav.Link href="/hfetch" style={{ color: 'white', fontSize: '20px',marginLeft: '10px' }}>Edit Food</Nav.Link>
 <Nav.Link href="/fetchc" style={{ color: 'white', fontSize: '20px' }}>All Customers</Nav.Link>
 <Nav.Link href="/fetch" style={{ color: 'white',fontSize: '20px' }}>All Foods</Nav.Link>
-<Nav.Link href="/all" style={{ color: 'white',fontSize: '20px' }}>complains</Nav.Link>
+<Nav.Link href="/all" style={{ color: 'white',fontSize: '20px' }}>Customer Review</Nav.Link>
 
            
            
