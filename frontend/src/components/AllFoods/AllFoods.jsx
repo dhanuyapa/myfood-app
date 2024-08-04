@@ -59,7 +59,7 @@ function AllFoods() {
                         sx={{
                             fontSize: '40px',
                           
-                            fontFamily: '"Roboto Slab", cursive',
+                            fontFamily: '"sans-serif',
                             color: 'Black',
                             marginInline: '25%',
                             display: 'flex',

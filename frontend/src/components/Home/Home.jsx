@@ -70,7 +70,7 @@ const overlayStyle = {
   left: 0,
   width: "100%",
   height: "100vh",
-  backgroundColor: "#FFD700", //background color
+  backgroundColor: "#FFFD74", //background color
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -111,7 +111,7 @@ const Home = () => {
       >
         <p
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: " sans-serif",
             letterSpacing: "5px",
             color: "#1F1F1F",
             fontSize: 70,

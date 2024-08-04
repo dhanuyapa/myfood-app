@@ -9,17 +9,15 @@ import styled from 'styled-components';
 // Styled Navbar with full width
 const FullWidthNavbar = styled(Navbar)`
   width: 100vw; /* Set width to 100% of viewport width */
-
-
   padding-left: 15px; /* Add padding to compensate for negative left margin */
-   /* Add padding to compensate for negative right margin */
+  background-color: #343a40; /* Custom background color */
 `;
 
 function AdminHeader() {
   return (
-    <FullWidthNavbar bg="primary" variant="dark" expand="lg">
+    <FullWidthNavbar bg="" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home" style={{ color: 'red', fontSize: '20px' }}>Yum Yard</Navbar.Brand>
+       
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
