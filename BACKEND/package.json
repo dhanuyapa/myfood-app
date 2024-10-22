@@ -4,7 +4,8 @@
   "description": "food delivery",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon Server.js"
+    "dev": "nodemon Server.js",
+    "build":"npm i"
   },
   "author": "dhanujaya",
   "license": "ISC",
