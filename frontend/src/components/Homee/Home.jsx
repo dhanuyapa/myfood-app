@@ -72,12 +72,13 @@ function Home() {
         transform: 'translate(-50%, -50%)',
         zIndex: 2,
         width: '80%',
-        marginRight : '100px',
+       
+        marginLeft : '-180px',
     };
 
     return (
       <div>
-        <div style={{ width: '100vw', height: '100vh', overflowX: 'auto', overflowY: 'hidden' }}>
+       <div style={{ width: '100vw', height: '100vh', overflowX: 'hidden', overflowY: 'hidden' }}>
             {/* Hero section with image slider */}
             <Slider {...sliderSettings}>
                 <div style={{ position: 'relative' }}>
