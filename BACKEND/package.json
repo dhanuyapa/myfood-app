@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "food delivery",
-  "main": "index.js",
+  "main": "Server.js",
   "scripts": {
     "dev": "nodemon Server.js",
-    "build":"npm i"
+    "build": "npm i",
+    "postinstall": "npm rebuild bcrypt --build-from-source"
   },
   "author": "dhanujaya",
   "license": "ISC",
@@ -18,5 +19,34 @@
     "mongoose": "^8.0.2",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "food delivery",
+  "main": "Server.js",
+  "scripts": {
+    "dev": "nodemon Server.js",
+    "build": "npm i",
+    "postinstall": "npm rebuild bcrypt --build-from-source"
+  },
+  "author": "dhanujaya",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
