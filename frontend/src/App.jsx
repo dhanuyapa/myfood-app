@@ -22,7 +22,7 @@ import DisplayCart from './components/AddCart/DisplayCart';
 import Payment from './components/payment/payment';
 import AllContactUs from './components/Contact Us/AllContactUs';
 import Homee from './components/Homee/Home';
-
+import SnowEffect from './components/SnowEffect';
 
 
 import './App.css';
@@ -32,7 +32,7 @@ function App() {
     <Router>
       <div>
         <Navbar />
-        
+        <SnowEffect />
         <Routes>
           <Route path ="/" element={<Homee />} />
           {/* Display Home component by default */}
