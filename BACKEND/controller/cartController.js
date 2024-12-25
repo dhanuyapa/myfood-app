@@ -1,4 +1,4 @@
-const CartItem = require('../models/cartItem');
+const CartItem = require('../models/CartItem');
 const food = require('../models/food');
 
 // Controller for adding an item to the cart
