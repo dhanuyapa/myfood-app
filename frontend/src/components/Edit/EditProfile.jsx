@@ -7,7 +7,7 @@ import './EditProfile.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import editvideo from './editvideo.mp4';
 import edit from './edit.jpg';
-
+import { BASE_URL } from '../../config';
 
 const EditProfile = () => {
   const { nic } = useParams(); // Get NIC from URL params
@@ -41,7 +41,7 @@ const firebaseConfig = {
     async function fetchUserProfile() {
       try {
         console.log("Fetching user details for NIC:", nic);
-        const response = await axios.get(`http://localhost:8070/customers/getUser/${nic}`);
+        const response = await axios.get(`${BASE_URL}/customers/getUser/${nic}`);
         console.log("User details response:", response.data);
         const { status, customer } = response.data;
 
@@ -103,7 +103,7 @@ const firebaseConfig = {
 
     if (confirmDelete) {
       axios
-        .delete(`http://localhost:8070/customers/deleteCus/${nic}`)
+        .delete(`${BASE_URL}/customers/deleteCus/${nic}`)
         .then((response) => {
           console.log('Account deleted successfully', response.data);
           alert('Account deleted successfully');
@@ -127,7 +127,7 @@ const firebaseConfig = {
       }
 
       // Update customer data
-      await axios.put(`http://localhost:8070/customers/updateCus/${nic}`, customer);
+      await axios.put(`${BASE_URL}/customers/updateCus/${nic}`, customer);
       console.log('Customer updated successfully');
       alert('Customer updated successfully');
 

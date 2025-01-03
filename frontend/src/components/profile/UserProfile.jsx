@@ -7,6 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import profileBanner from './profileBanner.jpg'
 import Typography from '@mui/material/Typography';
 import Footer from '../footer/footer';
+import { BASE_URL } from '../../config';
 
 function UserProfile() {
     const [userDetails, setUserDetails] = useState(null);
@@ -24,7 +25,7 @@ function UserProfile() {
                 }
 
                 console.log("Fetching user details for NIC:", loggedInUserNIC);
-                const response = await axios.get(`http://localhost:8070/customers/getUser/${loggedInUserNIC}`);
+                const response = await axios.get(`${BASE_URL}/customers/getUser/${loggedInUserNIC}`);
                 console.log("User details response:", response.data);
                 const { status, customer } = response.data;
 

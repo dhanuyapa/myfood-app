@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-
+import { BASE_URL } from '../../config';
 function CustomerSearch() {
     const [nic, setNic] = useState('');
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ function CustomerSearch() {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`http://localhost:8070/customers/searchByNIC/${nic}`);
+            const response = await axios.get(`${BASE_URL}/customers/searchByNIC/${nic}`);
             const customer = response.data.customer;
             if (customer) {
                 // Navigate to ViewCus with searchedCustomer as state

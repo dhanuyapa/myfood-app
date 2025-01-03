@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon Server.js",
-    "build":"npm i"
+    "build": "npm i",
+    "postinstall": "npm rebuild bcrypt --build-from-source"
   },
   "author": "dhanujaya",
   "license": "ISC",
@@ -18,5 +19,8 @@
     "mongoose": "^8.0.2",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }

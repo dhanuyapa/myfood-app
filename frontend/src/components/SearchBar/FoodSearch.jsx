@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import './FoodSearch.css';
 import SearchIcon from '@mui/icons-material/Search';
-
+import { BASE_URL } from '../../config';
 function FoodSearch() {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -12,7 +12,7 @@ function FoodSearch() {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8070/Food/search?foodName=${searchQuery}`);
+      const response = await axios.get(`${BASE_URL}/Food/search?foodName=${searchQuery}`);
       const foods = response.data;
       if (foods.length > 0) {
         // If food is available, navigate to the ViewFood component

@@ -7,7 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './Addcustomer.css';
 import Footer from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 const firebaseConfig = {
   apiKey: "AIzaSyAarwFcpYIKj1T7Hb2yIOMNiDP5Hp-ezFc",
   authDomain: "vitefood-72ee6.firebaseapp.com",
@@ -90,7 +90,7 @@ const Addcustomer = () => {
       }
 
       // Save data to MongoDB
-      await axios.post('http://localhost:8070/customers/register', customer);
+      await axios.post(`${BASE_URL}/customers/register`, customer);
       console.log('customer added successfully');
       alert('customer added successfully');
 

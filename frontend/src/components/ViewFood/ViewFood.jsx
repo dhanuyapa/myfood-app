@@ -7,7 +7,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Typography from '@mui/material/Typography';
 import add2 from "./add2.jpeg";
 import Foot from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 function ViewFood() {
     const navigate = useNavigate(); // Initialize navigate
     const { id } = useParams(); // Get the ID parameter from the URL
@@ -17,7 +17,7 @@ function ViewFood() {
     useEffect(() => {
         async function fetchFood() {
             try {
-                const response = await axios.get(`http://localhost:8070/food/fetch/${id}`);
+                const response = await axios.get(`${BASE_URL}/food/fetch/${id}`);
                 setFood(response.data);
                 setLoading(false);
             } catch (error) {

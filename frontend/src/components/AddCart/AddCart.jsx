@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Typography, Button, TextField } from '@mui/material';
 import Footer from '../footer/footer';
+import { BASE_URL } from '../../config';
 
 function AddCart() {
     const { nic, foodId } = useParams();
@@ -21,7 +22,7 @@ function AddCart() {
     useEffect(() => {
         const fetchFoodDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8070/Food/fetch/${foodId}`);
+                const response = await axios.get(`${BASE_URL}/Food/fetch/${foodId}`);
                 setFoodDetails(response.data);
             } catch (error) {
                 console.error('Error fetching food details:', error);
@@ -41,7 +42,7 @@ function AddCart() {
                 throw new Error('Invalid parameters');
             }
 
-            const response = await axios.post(`http://localhost:8070/addCart/addItem/${loggedInUserNIC}/${foodId}`, {
+            const response = await axios.post(`${BASE_URL}/addCart/addItem/${loggedInUserNIC}/${foodId}`, {
                 nic: loggedInUserNIC,
                 foodId,
                 quantity
@@ -60,7 +61,7 @@ function AddCart() {
 
     const calculateTotalPrice = async (cartItemId) => {
         try {
-            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
+            const response = await axios.get(`${BASE_URL}/addCart/totalPrice/${nic}/${cartItemId}`);
             setTotalPrice(response.data.total_price);
         } catch (error) {
             console.error('Error calculating total price:', error);
@@ -80,7 +81,7 @@ function AddCart() {
                 throw new Error('Invalid parameters');
             }
 
-            const response = await axios.delete(`http://localhost:8070/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
+            const response = await axios.delete(`${BASE_URL}/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
             setMessage(response.data.message);
             calculateTotalPrice(cartItemId);
         } catch (error) {
@@ -105,7 +106,7 @@ function AddCart() {
                 throw new Error('Invalid parameters');
             }
 
-            await axios.delete(`http://localhost:8070/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
+            await axios.delete(`${BASE_URL}/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
             navigate('/map'); // Navigate after deletion is successful
         } catch (error) {
             setError(error.message);

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AdminHeader from '../Header/AdminHeader';
 import Footer from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 
 function EditAllFood() {
     const [foods, setFoods] = useState([]);
@@ -14,7 +14,7 @@ function EditAllFood() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('http://localhost:8070/food/fetch'); // Adjust the route to match your backend
+                const response = await axios.get(`${BASE_URL}/food/fetch`); // Adjust the route to match your backend
                 setFoods(response.data);
                 setLoading(false);
             } catch (error) {
