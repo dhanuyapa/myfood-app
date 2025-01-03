@@ -58,22 +58,22 @@ export default function GridTemplateColumns() {
     
           <div>
       
-            <img style={{ width: '100%', display: 'block', maxHeight: '300px', maxWidth: '100%' }} src="./public/grid1.jpg" alt="Slide 3" />
+            <img style={{ width: '100%', display: 'block', maxHeight: '300px', maxWidth: '100%' }} src="./grid1.jpg" alt="Slide 3" />
           </div><br></br>
         
-          <Typography  style={{ fontFamily: 'Arial', fontSize: '15px', color: 'black',textAlign: 'justify'}}>The Technology program was commenced on January 2017 at Rajarata University of Sri lanka Mihintale centralizing the Faculty of Applied Sciences. At present the Faculty consists with five Departments Bio Process Technology, Electrical & Electronic Technology, Food Technology, Information & Communication Technology and Materials Technology . </Typography>
+          <Typography  style={{ fontFamily: 'Arial', fontSize: '15px', color: 'black',textAlign: 'justify'}}>Discover a culinary paradise with our Foodie Delight collection. Curated for the ultimate food lover, this selection features a diverse range of gourmet dishes that are sure to tantalize your taste buds and leave you craving more. </Typography>
       
       </Item>
    
       <Item>
-        <img style={{ width: '100%', display: 'block', maxHeight: '370px', maxWidth: '100%' }} src="./public/grid5.jpg" alt="Slide 5" />
+        <img style={{ width: '100%', display: 'block', maxHeight: '370px', maxWidth: '100%' }} src="./grid5.jpg" alt="Slide 5" />
         <br></br>
      
       <Typography style={{ fontFamily: 'Arial', fontSize: '15px', color: 'black',textAlign:'justify'}}>Welcome to Yummy Yard, your go-to destination for delicious and diverse food options. Whether you're in the mood for a quick snack, a hearty meal, or a sweet treat, we have something to satisfy every craving. Enjoy the convenience of having your favorite dishes delivered straight to your door..</Typography>
       
       </Item> 
       <Item>
-        <img style={{ width: '100%', display: 'block', maxHeight: '300px', maxWidth: '100%' }} src="./public/grid2.jpg" alt="Slide 5" />
+        <img style={{ width: '100%', display: 'block', maxHeight: '300px', maxWidth: '100%' }} src="./grid2.jpg" alt="Slide 5" />
        <br></br> 
         <Typography style={{ fontFamily: 'Arial', fontSize: '15px', color: 'black',textAlign:'justify'}}>Discover a culinary paradise with our Foodie Delight collection. Curated for the ultimate food lover, this selection features a diverse range of gourmet dishes that are sure to tantalize your taste buds and leave you craving more.</Typography>
       

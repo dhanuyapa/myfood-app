@@ -6,7 +6,7 @@ import envelope_icon from './envelope.png';
 import phone_icon from './smartphone.png';
 import img_icon from './img1.jpeg';
 import Footer from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 function ContactUs() {
   const [formData, setFormData] = useState({
     name: "",
@@ -50,7 +50,7 @@ function ContactUs() {
     setFormData((prevState) => ({ ...prevState, loading: true }));
 
     try {
-      const response = await axios.post('http://localhost:8070/contactUs/add', {
+      const response = await axios.post(`${BASE_URL}/contactUs/add`, {
         name: formData.name,
         phone: formData.phone,
         email: formData.email,

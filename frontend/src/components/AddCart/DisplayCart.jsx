@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Box, Typography, Card, CardMedia, CardContent, IconButton, Button } from '@mui/material';
 import { Remove } from '@mui/icons-material';
-
+import { BASE_URL } from '../../config';
 function DisplayCart() {
     const { nic, cartItemId } = useParams();
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ function DisplayCart() {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get(`http://localhost:8070/addCart/cartItems/${nic}/${cartItemId}`);
+                const response = await axios.get(`${BASE_URL}/addCart/cartItems/${nic}/${cartItemId}`);
                 console.log('Cart items:', response.data.data); // Log the response to check the data
                 setCartItems(response.data.data);
             } catch (error) {
@@ -28,7 +28,7 @@ function DisplayCart() {
 
         const fetchTotalPrice = async () => {
             try {
-                const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
+                const response = await axios.get(`${BASE_URL}/addCart/totalPrice/${nic}/${cartItemId}`);
                 setTotalPrice(response.data.total_price);
             } catch (error) {
                 console.error('Error fetching total price:', error);
@@ -49,7 +49,7 @@ function DisplayCart() {
                 throw new Error('Invalid parameters');
             }
 
-            await axios.delete(`http://localhost:8070/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
+            await axios.delete(`${BASE_URL}/addCart/cartItems/${loggedInUserNIC}/${cartItemId}`);
             navigate(`/payment/${loggedInUserNIC}/${cartItemId}`); // Corrected the template literal syntax
         } catch (error) {
             setError(error.message);
@@ -72,14 +72,14 @@ function DisplayCart() {
                 throw new Error('Invalid parameters');
             }
 
-            await axios.delete(`http://localhost:8070/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
+            await axios.delete(`${BASE_URL}/addCart/removeItem/${loggedInUserNIC}/${foodId}`);
 
             // Update the cart items after removing an item
             const updatedCartItems = cartItems.filter(item => item.foodId._id !== foodId);
             setCartItems(updatedCartItems);
 
             // Recalculate the total price
-            const response = await axios.get(`http://localhost:8070/addCart/totalPrice/${nic}/${cartItemId}`);
+            const response = await axios.get(`${BASE_URL}/addCart/totalPrice/${nic}/${cartItemId}`);
             setTotalPrice(response.data.total_price);
 
         } catch (error) {

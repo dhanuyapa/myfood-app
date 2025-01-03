@@ -11,7 +11,7 @@ import FoodSearch from '../SearchBar/FoodSearch';
 import Container from '@mui/material/Container';
 import Footer from '../footer/footer';
 
-
+import { BASE_URL } from '../../config';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -86,7 +86,7 @@ const Addfoods = () => {
       }
 
       // Save data to MongoDB
-      await axios.post('http://localhost:8070/food/add', food);
+      await axios.post(`${BASE_URL}/food/add`, food);
       console.log('Food added successfully');
 
       // Reset form fields after successful submission

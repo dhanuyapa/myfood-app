@@ -23,6 +23,7 @@ import Payment from './components/payment/payment';
 import AllContactUs from './components/Contact Us/AllContactUs';
 import Homee from './components/Homee/Home';
 import SnowEffect from './components/SnowEffect';
+import NotFound from './components/NotFound';
 
 
 import './App.css';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/map" element={<MapRoute />} /> {/* Corrected this line */}
           <Route path="/payment/:nic/:cartItemId" element={<Payment />} />
           <Route path="/all" element={<AllContactUs />} />
+          <Route path="*" element={<NotFound />} /> 
         </Routes>
       </div>
     </Router>

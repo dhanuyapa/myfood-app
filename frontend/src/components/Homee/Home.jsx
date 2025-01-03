@@ -85,25 +85,25 @@ function Home() {
                     <Box sx={searchBarContainer}>
                         <Search />
                     </Box>
-                    <img style={{ width: '100%', display: 'block' }} src="./public/home2.jpg" alt="Slide 1" />
+                    <img style={{ width: '100%', display: 'block' }} src="./home2.jpg" alt="Slide 1" />
                 </div>
                 <div style={{ position: 'relative' }}>
                 <Box sx={searchBarContainer}>
                         <Search />
                     </Box>
-                    <img style={{ width: '100%', display: 'block' }} src="./public/home1.jpg" alt="Slide 2" />
+                    <img style={{ width: '100%', display: 'block' }} src="./home1.jpg" alt="Slide 2" />
                 </div>
                 <div style={{ position: 'relative' }}>
                 <Box sx={searchBarContainer}>
                         <Search />
                     </Box>
-                    <img style={{ width: '100%', display: 'block' }} src="./public/home6.jpg" alt="Slide 3" />
+                    <img style={{ width: '100%', display: 'block' }} src="./home6.jpg" alt="Slide 3" />
                 </div>
                 <div style={{ position: 'relative' }}>
                 <Box sx={searchBarContainer}>
                         <Search />
                     </Box>
-                    <img style={{ width: '100%', display: 'block' }} src="./public/home7.jpg" alt="Slide 4" />
+                    <img style={{ width: '100%', display: 'block' }} src="./home7.jpg" alt="Slide 4" />
                 </div>
                 {/* Add as many slides as you want */}
             </Slider>

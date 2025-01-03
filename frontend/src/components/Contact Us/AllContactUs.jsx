@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AllContactUs.css';
 import Header from '../Header/AdminHeader';
-
+import { BASE_URL } from '../../config';
 function AllContactUs() {
   const [contactDetails, setContactDetails] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +11,7 @@ function AllContactUs() {
   useEffect(() => {
     const fetchContactDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:8070/contactUs/all');
+        const response = await axios.get(`${BASE_URL}/contactUs/all`);
         setContactDetails(response.data);
         setLoading(false);
       } catch (error) {

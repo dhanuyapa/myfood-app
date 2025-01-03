@@ -7,7 +7,7 @@ import AdminHeader from '../Header/AdminHeader';
 import './Editfood.css'
 import FoodSearch from '../SearchBar/FoodSearch';
 import Footer from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 const EditFood = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const EditFood = () => {
   useEffect(() => {
     const fetchFoodDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8070/food/fetch/${id}`);
+        const response = await axios.get(`${BASE_URL}/food/fetch/${id}`);
         setFood(response.data);
       } catch (error) {
         console.error('Error fetching food details:', error);

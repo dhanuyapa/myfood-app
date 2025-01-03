@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Footer from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 function AllCustomers() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ function AllCustomers() {
   useEffect(() => {
     async function fetchCustomers() {
       try {
-        const response = await axios.get('http://localhost:8070/customers/fetchc');
+        const response = await axios.get(`${BASE_URL}/customers/fetchc`);
         setCustomers(response.data);
         setLoading(false);
       } catch (error) {

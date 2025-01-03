@@ -7,7 +7,7 @@ import login from './login.png';
 import person from './person.png';
 import './Login.css';
 import Footer from '../footer/footer';
-
+import { BASE_URL } from '../../config';
 
 
 function Login() {
@@ -43,7 +43,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8070/customers/loginCus', { nic, password });
+      const response = await axios.post(`${BASE_URL}/customers/loginCus`, { nic, password });
 
       if (response.status === 200) {
         localStorage.setItem('loggedInUserNIC', nic);
